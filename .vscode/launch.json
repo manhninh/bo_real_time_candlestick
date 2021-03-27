@@ -20,7 +20,8 @@
       "env": {
         "NODE_ENV": "development",
         "PORT": "5000",
-        "MONGODB_URI": "mongodb+srv://Bimuzu:Ca8JyK5wgMniHy8F@tradefhd.akq3y.mongodb.net/tradeProdDB?retryWrites=true&w=majority"
+        "MONGODB_URI": "mongodb+srv://ninhpm:ninhpm123@cluster0.ofmu5.mongodb.net/bo_trading_new",
+        "BINANCE_BASE_ENDPOINT": "wss://stream.binance.com:9443"
       }
     }
   ]

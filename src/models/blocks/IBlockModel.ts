@@ -1,7 +1,12 @@
-import mongoose, {Schema} from 'mongoose';
+import {Document} from 'mongoose';
 
-export default interface IBlockModel extends mongoose.Document {
-  id_user: Schema.Types.ObjectId;
-  block_id: Schema.Types.ObjectId;
-  symbol: Schema.Types.String;
+export default interface IBlockModel extends Document {
+  symbol: string;
+  event_time: string;
+  open: number;
+  close: number;
+  high: number;
+  low: number;
+  volume: number;
+  is_open: boolean;
 }
