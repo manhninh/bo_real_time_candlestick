@@ -1,0 +1,44 @@
+import mongoose, {Schema} from 'mongoose';
+
+export default interface IRealUserModel extends mongoose.Document {
+  full_name?: string;
+  username?: string;
+  email?: string;
+  password?: string;
+  email_verify_at?: Date;
+  phone?: string;
+  country_id?: string;
+  amount?: number;
+  is_ib?: boolean;
+  buy_ib_at?: Date;
+  commission_ib?: number;
+  commission_ref?: number;
+  commission_matrix?: number;
+  commission_botAI?: number;
+  is_root_sponsor?: boolean;
+  sponsor_id?: Schema.Types.ObjectId;
+  sponsor_path?: Schema.Types.ObjectId[];
+  withdraw_blocked_at?: Date;
+  login_blocked_at?: Date;
+  tfa_secret?: string;
+  is_tfa_enabled?: boolean;
+  verify_code?: string;
+  main_acc_id?: string;
+  is_fake_user?: boolean;
+  token?: string;
+  blockedAt?: Date;
+  eth_address?: string;
+  eth_address_password?: string;
+  eth_address_seed?: string;
+  eth_address_private_key?: string;
+  deposits?: string;
+  withdraws?: string;
+  is_auto_upgrade_matrix?: boolean;
+  matrix_package_ids?: string;
+  matrix_withdraw_back?: number;
+  login_code?: string;
+  verify_failed?: number;
+  login_code_lastest?: Date;
+  receivedBonusAt?: Date;
+  showBonusAt?: Date;
+}

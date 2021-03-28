@@ -1,5 +1,6 @@
 declare module NodeJS {
   interface Global {
+    /** dữ liệu nến */
     candlestick: {
       time: number;
       o: number;
@@ -9,6 +10,9 @@ declare module NodeJS {
       v: number;
       Q: number;
     };
+    /** socket */
     io: any;
+    /** bảo vệ sàn */
+    protectBO: number;
   }
 }
