@@ -40,5 +40,16 @@ export default class CandlestickStreams {
         logger.error(`WebSocket to ${this._baseEndpoint} parse message failed\n`, e);
       }
     };
+
+    this._heartBeat();
+  }
+
+  _heartBeat() {
+    setInterval(() => {
+      if (this._ws.readyState === WebSocket.OPEN) {
+        this._ws.ping();
+        logger.debug(`Ping server ${this._baseEndpoint}`);
+      }
+    }, 5000);
   }
 }

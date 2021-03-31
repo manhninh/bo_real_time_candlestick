@@ -1,8 +1,7 @@
-import {json, urlencoded} from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import compression from 'compression';
 import express from 'express';
-import passport from 'passport';
-import {errorMiddleware, notFoundMiddleware} from './middleware/Exceptions';
+import { errorMiddleware, notFoundMiddleware } from './middleware/Exceptions';
 import routes from './routes';
 import Scheduler from './schedulers';
 import HeartBeat from './socketHandlers/candlestickStreams/HeartBeat';
@@ -26,11 +25,8 @@ class App {
     this.app.use(compression());
 
     /** support application/json type post data */
-    this.app.use(json({limit: '10MB'}));
-    this.app.use(urlencoded({extended: true}));
-
-    /** middle-ware that initialises Passport */
-    this.app.use(passport.initialize());
+    this.app.use(json({ limit: '10MB' }));
+    this.app.use(urlencoded({ extended: true }));
 
     /** add routes */
     this.app.use('/api/v1', routes);
