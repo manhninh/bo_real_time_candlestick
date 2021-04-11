@@ -13,4 +13,8 @@ export default {
   MONGODB_URI: process.env.MONGODB_URI,
 
   BINANCE_BASE_ENDPOINT: process.env.BINANCE_BASE_ENDPOINT,
+
+  WS_COIN_API_ENDPOINT: process.env.WS_COIN_API_ENDPOINT,
+
+  WS_COIN_API_KEY: process.env.WS_COIN_API_KEY,
 };
