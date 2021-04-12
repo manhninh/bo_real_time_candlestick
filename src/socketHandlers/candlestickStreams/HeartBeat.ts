@@ -74,7 +74,11 @@ export default class HeartBeat {
 
       /** cách 30s lưu giá trị vào bảng block 1 lần */
       if (timeTick === 0 || timeTick === 30) {
-        if (timeTick === 0) global.protectBO = PROTECT_STATUS.NORMAL;
+        if (timeTick === 0) {
+          const buySell = this._candlestick.o > this._candlestick.c ? 0 : 1;
+          global.io.sockets.in('ethusdt').emit(EMITS.RESULT_BUY_SELL, buySell);
+          global.protectBO = PROTECT_STATUS.NORMAL;
+        }
         const _blockModel = <IBlockModel>{
           symbol: 'ethusdt',
           event_time: new Date(moment(eventTime).subtract(30, 'seconds').toString()).getTime().toString(),
@@ -85,7 +89,6 @@ export default class HeartBeat {
           volume: Number(formatter2.format(this._candlestick.v)),
           is_open: timeTick < 30 ? true : false,
         };
-        // console.log(_blockModel, '_blockModel');
         this._blockRes.create(_blockModel);
       }
     }, 1000);

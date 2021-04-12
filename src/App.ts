@@ -5,6 +5,7 @@ import express from 'express';
 import routes from './routes';
 import Scheduler from './schedulers';
 import HeartBeat from './socketHandlers/candlestickStreams/HeartBeat';
+import Indicator from './socketHandlers/indicator';
 
 class App {
   public app: express.Application;
@@ -15,6 +16,7 @@ class App {
     this.config();
     /** lắng nghe dữ liệu nến trả về từ các sàn (Binance,...) để xử lý nến */
     new HeartBeat();
+    new Indicator();
     /** cronjob */
     new Scheduler().config();
   }

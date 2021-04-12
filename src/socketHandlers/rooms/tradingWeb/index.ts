@@ -11,6 +11,11 @@ const ethusdt: TradingCandles = (socket) => (data) => {
   });
 };
 
+const indicator_ethusdt: TradingCandles = (socket) => (data) => {
+  socket.join('indicator_ethusdt');
+};
+
 export default (socket: Socket) => ({
   ethusdt: ethusdt(socket),
+  indicator_ethusdt: indicator_ethusdt(socket),
 });

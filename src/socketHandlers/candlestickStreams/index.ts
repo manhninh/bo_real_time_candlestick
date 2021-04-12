@@ -37,7 +37,6 @@ export default class CandlestickStreams {
     this._ws.onmessage = (msg: WebSocket.MessageEvent) => {
       try {
         const data = JSON.parse(msg.data.toString());
-        console.log(data, 'data');
         if (data) {
           global.candlestick = {
             o: Number(data.price_open),

@@ -30,11 +30,7 @@ server.on('listening', () => {
     new CandlestickStreams(`${config.WS_COIN_API_ENDPOINT}`);
 
     /** tạo socket server của hệ thống */
-    const io: Server = new Server(server, {
-      cors: {
-        origin: '*',
-      },
-    });
+    const io: Server = new Server(server, {cors: {origin: '*'}});
     IOHandlers(io);
   });
   mongoose.connection.on('error', (err) => {
