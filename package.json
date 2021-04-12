@@ -30,6 +30,7 @@
     "apidoc": "^0.27.1",
     "axios": "^0.21.0",
     "bcryptjs": "^2.4.3",
+    "bo-trading-common": "^1.1.0",
     "body-parser": "^1.18.3",
     "class-validator": "^0.13.1",
     "compression": "^1.7.4",
@@ -45,12 +46,12 @@
     "oauth2orize": "^1.11.0",
     "socket.io": "^4.0.1",
     "socket.io-client": "^4.0.1",
-    "typescript": "^4.1.2",
+    "typescript": "^4.2.4",
     "winston": "^3.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.13.14",
-    "@babel/preset-env": "^7.12.7",
+    "@babel/core": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
     "@babel/register": "^7.13.14",
     "@types/axios": "^0.14.0",
     "@types/body-parser": "^1.17.0",

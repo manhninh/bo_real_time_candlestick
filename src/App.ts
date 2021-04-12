@@ -1,10 +1,11 @@
-import { json, urlencoded } from 'body-parser';
+import {errorMiddleware, notFoundMiddleware} from 'bo-trading-common/lib/utils';
+import {json, urlencoded} from 'body-parser';
 import compression from 'compression';
 import express from 'express';
-import { errorMiddleware, notFoundMiddleware } from './middleware/Exceptions';
 import routes from './routes';
 import Scheduler from './schedulers';
 import HeartBeat from './socketHandlers/candlestickStreams/HeartBeat';
+import Indicator from './socketHandlers/indicator';
 
 class App {
   public app: express.Application;
@@ -15,18 +16,18 @@ class App {
     this.config();
     /** lắng nghe dữ liệu nến trả về từ các sàn (Binance,...) để xử lý nến */
     new HeartBeat();
+    new Indicator();
     /** cronjob */
     new Scheduler().config();
   }
 
   private config() {
-    this.app.use(express.static(`${__dirname}/wwwroot`));
     // this.app.use(cors({origin: '*', methods: ['PUT', 'POST', 'GET', 'DELETE', 'OPTIONS']}));
     this.app.use(compression());
 
     /** support application/json type post data */
-    this.app.use(json({ limit: '10MB' }));
-    this.app.use(urlencoded({ extended: true }));
+    this.app.use(json({limit: '10MB'}));
+    this.app.use(urlencoded({extended: true}));
 
     /** add routes */
     this.app.use('/api/v1', routes);

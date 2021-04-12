@@ -2,13 +2,13 @@ declare module NodeJS {
   interface Global {
     /** dữ liệu nến */
     candlestick: {
-      time: number;
+      // time: number;
       o: number;
       c: number;
       h: number;
       l: number;
       v: number;
-      Q: number;
+      // Q: number;
     };
     /** socket */
     io: any;

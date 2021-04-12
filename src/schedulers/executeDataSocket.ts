@@ -1,4 +1,4 @@
-import {logger} from '@src/middleware';
+import {logger} from 'bo-trading-common/lib/utils';
 
 export default (date: Date) => {
   try {
