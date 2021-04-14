@@ -1,6 +1,6 @@
 apps:
   - script: dist/index.js
-    name: 'copy trading api'
+    name: 'BO Trading Candlestick'
     watch: ['dist']
     ignore_watch: ['node_modules', 'dist/logs']
     env_dev:

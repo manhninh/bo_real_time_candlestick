@@ -1,8 +1,8 @@
 {
-  "name": "Copy Trading",
+  "name": "BO Trading Candlestick",
   "version": "0.1.0",
-  "description": "BO Real Time Candlestick Document",
-  "title": "BO Real Time Candlestick",
+  "description": "BO Trading Candlestick Document",
+  "title": "BO Trading Candlestick",
   "url": "http://localhost:3000/api/v1",
   "template": {
     "forceLanguage": "en"
