@@ -24,10 +24,13 @@ server.on('listening', () => {
     );
 
     /** kết nối với websocket của sàn binance để lấy thông tin nến */
-    new CandlestickStreams(`${config.BINANCE_BASE_ENDPOINT}/ws/ethusdt@kline_1m`);
+    // new CandlestickStreams(`${config.BINANCE_BASE_ENDPOINT}/ws/ethusdt@kline_1m`);
+
+    /** kết nối với websocket của COINAPI để lấy thông tin nến */
+    new CandlestickStreams(`${config.WS_COIN_API_ENDPOINT}`);
 
     /** tạo socket server của hệ thống */
-    const io: Server = new Server(server, {path: '/candlestick_stream'});
+    const io: Server = new Server(server, {cors: {origin: '*'}});
     IOHandlers(io);
   });
   mongoose.connection.on('error', (err) => {
