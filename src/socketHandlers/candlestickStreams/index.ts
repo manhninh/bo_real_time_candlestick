@@ -1,5 +1,5 @@
 import config from '@src/config';
-import {logger} from 'bo-trading-common/lib/utils';
+import { logger } from 'bo-trading-common/lib/utils';
 import WebSocket from 'ws';
 
 export default class CandlestickStreams {
@@ -18,7 +18,7 @@ export default class CandlestickStreams {
       logger.info(`WebSocket connected to ${this._baseEndpoint}\n`);
       var hello = {
         type: 'hello',
-        heartbeat: false,
+        heartbeat: true,
         apikey: config.WS_COIN_API_KEY,
         subscribe_data_type: ['ohlcv'],
         subscribe_filter_symbol_id: [
@@ -57,16 +57,5 @@ export default class CandlestickStreams {
 
     this._ws.onerror = (err: WebSocket.ErrorEvent) =>
       logger.error(`WebSocket to ${this._baseEndpoint} error`, err, '\n');
-
-    this._heartBeat();
-  }
-
-  _heartBeat() {
-    setInterval(() => {
-      if (this._ws.readyState === WebSocket.OPEN) {
-        this._ws.ping();
-        logger.debug(`Ping server ${this._baseEndpoint}`);
-      }
-    }, 5000);
   }
 }
