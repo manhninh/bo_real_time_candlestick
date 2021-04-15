@@ -57,16 +57,5 @@ export default class CandlestickStreams {
 
     this._ws.onerror = (err: WebSocket.ErrorEvent) =>
       logger.error(`WebSocket to ${this._baseEndpoint} error`, err, '\n');
-
-    this._heartBeat();
-  }
-
-  _heartBeat() {
-    setInterval(() => {
-      if (this._ws.readyState === WebSocket.OPEN) {
-        this._ws.ping();
-        logger.debug(`Ping server ${this._baseEndpoint}`);
-      }
-    }, 5000);
   }
 }
