@@ -8,10 +8,10 @@ export default class CandlestickStreams {
 
   constructor(baseEndpoint: string) {
     this._baseEndpoint = baseEndpoint;
-    this._createSocket();
+    this._connectWebSocket();
   }
 
-  _createSocket() {
+  private _connectWebSocket() {
     this._ws = new WebSocket(this._baseEndpoint);
 
     this._ws.onopen = () => {
@@ -38,6 +38,7 @@ export default class CandlestickStreams {
       try {
         const data = JSON.parse(msg.data.toString());
         if (data) {
+          if (data.type == "hearbeat") return;
           global.candlestick = {
             o: Number(data.price_open),
             c: Number(data.price_close),
@@ -46,16 +47,22 @@ export default class CandlestickStreams {
             v: Number(data.volume_traded) + Number(data.trades_count),
           };
         } else {
-          logger.warn(`WebSocket to ${this._baseEndpoint} unprocessed method\n`);
+          logger.warn(`WebSocket to ${this._baseEndpoint} not data: ${msg.data.toString()}\n`);
         }
       } catch (e) {
         logger.error(`WebSocket to ${this._baseEndpoint} parse message failed\n`, e);
       }
     };
 
-    this._ws.onclose = () => logger.warn(`WebSocket to ${this._baseEndpoint} closed\n`);
+    this._ws.onclose = () => {
+      logger.warn(`WebSocket to ${this._baseEndpoint} closed. Reconnect will be attempted in 1 second\n`);
+      setTimeout(function () {
+        new CandlestickStreams(config.WS_COIN_API_ENDPOINT);
+      }, 1000);
+    };
 
     this._ws.onerror = (err: WebSocket.ErrorEvent) =>
       logger.error(`WebSocket to ${this._baseEndpoint} error`, err, '\n');
+
   }
 }

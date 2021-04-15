@@ -1,7 +1,7 @@
 import http from 'http';
 import 'module-alias/register';
 import mongoose from 'mongoose';
-import {Server} from 'socket.io';
+import { Server } from 'socket.io';
 import app from './App';
 import config from './config';
 import CandlestickStreams from './socketHandlers/candlestickStreams';
@@ -15,7 +15,7 @@ server.listen(config.port);
 
 server.on('listening', () => {
   // if (process.env.NODE_ENV !== 'production') mongoose.set('debug', true);
-  mongoose.connect(config.MONGODB_URI, {useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true});
+  mongoose.connect(config.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
   mongoose.connection.once('open', () => {
     console.info('\n🚀Connected to Mongo via Mongoose');
     console.info(
@@ -27,10 +27,10 @@ server.on('listening', () => {
     // new CandlestickStreams(`${config.BINANCE_BASE_ENDPOINT}/ws/ethusdt@kline_1m`);
 
     /** kết nối với websocket của COINAPI để lấy thông tin nến */
-    new CandlestickStreams(`${config.WS_COIN_API_ENDPOINT}`);
+    new CandlestickStreams(config.WS_COIN_API_ENDPOINT);
 
     /** tạo socket server của hệ thống */
-    const io: Server = new Server(server, {cors: {origin: '*'}});
+    const io: Server = new Server(server, { cors: { origin: '*' } });
     IOHandlers(io);
   });
   mongoose.connection.on('error', (err) => {
