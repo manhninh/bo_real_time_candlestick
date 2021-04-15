@@ -9,7 +9,6 @@
   "scripts": {
     "apidoc": "apidoc -i src/ -o dist/wwwroot/apidoc/ && ncp ./style.css ./dist/wwwroot/apidoc/css/style.css",
     "build": "rimraf ./dist && tsc --build tsconfig.json",
-    "build:prod": "rimraf ./dist && tsc --build tsconfig.json",
     "prestart": "npm run build",
     "start": "node ./dist/index.js",
     "lint": "tslint -c tslint.json 'src/**/*.ts' --fix --format verbose"
