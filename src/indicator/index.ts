@@ -1,6 +1,6 @@
-import { random } from '@src/utils/utilities';
+import {random} from '@src/utils/utilities';
 import moment from 'moment';
-import { EMITS } from '../socketHandlers/emitType';
+import {EMITS} from '../socketHandlers/emitType';
 
 export default class IndicatorEthUsdt {
   constructor() {
@@ -25,7 +25,8 @@ export default class IndicatorEthUsdt {
 
     setInterval(() => {
       const timeTick = moment(new Date()).unix() % 60;
-      if (timeTick === 0 || timeTick < 28) {
+      if (timeTick > 29) return;
+      if (timeTick < 29) {
         oscillatorsBuy += random(5, 10);
         oscillatorsNeutral += random(5, 10);
         oscillatorsSell += random(5, 10);
@@ -46,41 +47,39 @@ export default class IndicatorEthUsdt {
           indicator_type = random(700, 900);
         }
         indicator = random(50, 70);
-        /** emit to room indicator_ethusdt */
-        global.io?.sockets.in('indicator_ethusdt').emit(EMITS.INDICATOR_ETHUSDT, {
-          oscillatorsBuy,
-          oscillatorsNeutral,
-          oscillatorsSell,
-          maBuy,
-          maNeutral,
-          maSell,
-          macdBuy,
-          macdNeutral,
-          macdSell,
-          totalBuy,
-          totalNeutral,
-          totalSell,
-          indicator_type,
-          indicator,
-        });
-      } else if (timeTick === 29) {
-        global.io?.sockets.in('indicator_ethusdt').emit(EMITS.INDICATOR_ETHUSDT, {
-          oscillatorsBuy: 0,
-          oscillatorsNeutral: 0,
-          oscillatorsSell: 0,
-          maBuy: 0,
-          maNeutral: 0,
-          maSell: 0,
-          macdBuy: 0,
-          macdNeutral: 0,
-          macdSell: 0,
-          totalBuy: 0,
-          totalNeutral: 0,
-          totalSell: 0,
-          indicator_type: 0,
-          indicator: 0,
-        });
+      } else {
+        oscillatorsBuy = 0;
+        oscillatorsNeutral = 0;
+        oscillatorsSell = 0;
+        maBuy = 0;
+        maNeutral = 0;
+        maSell = 0;
+        macdBuy = 0;
+        macdNeutral = 0;
+        macdSell = 0;
+        totalBuy = 0;
+        totalNeutral = 0;
+        totalSell = 0;
+        indicator_type = 0;
+        indicator = 0;
       }
+      /** emit to room indicator_ethusdt */
+      global.io?.sockets.in('indicator_ethusdt').emit(EMITS.INDICATOR_ETHUSDT, {
+        oscillatorsBuy,
+        oscillatorsNeutral,
+        oscillatorsSell,
+        maBuy,
+        maNeutral,
+        maSell,
+        macdBuy,
+        macdNeutral,
+        macdSell,
+        totalBuy,
+        totalNeutral,
+        totalSell,
+        indicator_type,
+        indicator,
+      });
     }, 4000);
   }
 }
