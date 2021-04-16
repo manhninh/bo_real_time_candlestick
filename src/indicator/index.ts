@@ -1,6 +1,6 @@
 import { random } from '@src/utils/utilities';
 import moment from 'moment';
-import { EMITS } from '../socketHandlers/EmitType';
+import { EMITS } from '../socketHandlers/emitType';
 
 export default class IndicatorEthUsdt {
   constructor() {

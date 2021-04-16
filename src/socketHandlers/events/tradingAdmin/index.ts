@@ -1,5 +1,5 @@
-import {Socket} from 'socket.io';
-import {TradingCandles} from './ITradingSystem';
+import { Socket } from 'socket.io';
+import { TradingCandles } from './ITradingAdmin';
 
 const protectStatus: TradingCandles = (socket) => (data: number) => {
   global.protectBO = data;

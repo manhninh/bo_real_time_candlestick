@@ -1,5 +1,5 @@
 import express from 'express';
-import HeartBeat from './candlestickStreams/HeartBeat';
+import HeartBeat from './candlestickStreams/heartBeat';
 import Indicator from './indicator';
 import Scheduler from './schedulers';
 

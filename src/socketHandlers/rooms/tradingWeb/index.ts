@@ -1,8 +1,8 @@
-import BlockRepository from '@src/repository/BlockRepository';
-import { EMITS } from '@src/socketHandlers/EmitType';
+import BlockRepository from '@src/repository/blockRepository';
+import { EMITS } from '@src/socketHandlers/emitType';
 import { logger } from 'bo-trading-common/lib/utils';
 import { Socket } from 'socket.io';
-import { TradingCandles } from './ITradingSystem';
+import { TradingCandles } from './ITradingWeb';
 
 const ethusdt: TradingCandles = (socket) => (data) => {
   socket.join('ethusdt');

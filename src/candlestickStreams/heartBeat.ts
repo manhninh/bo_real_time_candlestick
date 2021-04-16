@@ -1,9 +1,9 @@
 import { PROTECT_STATUS } from '@src/contants/system';
-import BlockRepository from '@src/repository/BlockRepository';
+import BlockRepository from '@src/repository/blockRepository';
 import { formatter2 } from '@src/utils/utilities';
 import { IBlockModel } from 'bo-trading-common/lib/models/blocks';
 import moment from 'moment';
-import { EMITS } from '../socketHandlers/EmitType';
+import { EMITS } from '../socketHandlers/emitType';
 
 export default class HeartBeat {
   private _blockRes: BlockRepository;
