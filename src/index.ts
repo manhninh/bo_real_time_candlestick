@@ -5,7 +5,7 @@ import { Server } from 'socket.io';
 import app from './app';
 import CandlestickStreams from './candlestickStreams';
 import config from './config';
-import IOHandlers from './socketHandlers/EventHandlers';
+import IOHandlers from './socketHandlers/eventHandlers';
 
 app.set('port', config.port);
 
