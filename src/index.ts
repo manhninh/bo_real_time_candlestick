@@ -3,8 +3,8 @@ import 'module-alias/register';
 import mongoose from 'mongoose';
 import { Server } from 'socket.io';
 import app from './App';
+import CandlestickStreams from './candlestickStreams';
 import config from './config';
-import CandlestickStreams from './socketHandlers/candlestickStreams';
 import IOHandlers from './socketHandlers/EventHandlers';
 
 app.set('port', config.port);
@@ -22,9 +22,6 @@ server.on('listening', () => {
       `\n🚀Server listening on port: ${config.port} - env: ${process.env.NODE_ENV}
       \n🚀API Document on http://localhost:${config.port}/apidoc/index.html\n`,
     );
-
-    /** kết nối với websocket của sàn binance để lấy thông tin nến */
-    // new CandlestickStreams(`${config.BINANCE_BASE_ENDPOINT}/ws/ethusdt@kline_1m`);
 
     /** kết nối với websocket của COINAPI để lấy thông tin nến */
     new CandlestickStreams(config.WS_COIN_API_ENDPOINT);

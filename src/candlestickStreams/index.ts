@@ -63,6 +63,5 @@ export default class CandlestickStreams {
 
     this._ws.onerror = (err: WebSocket.ErrorEvent) =>
       logger.error(`WebSocket to ${this._baseEndpoint} error`, err, '\n');
-
   }
 }

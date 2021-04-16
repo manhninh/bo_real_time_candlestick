@@ -1,6 +1,6 @@
 import { random } from '@src/utils/utilities';
 import moment from 'moment';
-import { EMITS } from '../EmitType';
+import { EMITS } from '../socketHandlers/EmitType';
 
 export default class IndicatorEthUsdt {
   constructor() {
@@ -25,7 +25,7 @@ export default class IndicatorEthUsdt {
 
     setInterval(() => {
       const timeTick = moment(new Date()).unix() % 60;
-      if (timeTick === 0 || timeTick < 30) {
+      if (timeTick === 0 || timeTick < 28) {
         oscillatorsBuy += random(5, 10);
         oscillatorsNeutral += random(5, 10);
         oscillatorsSell += random(5, 10);
@@ -63,7 +63,7 @@ export default class IndicatorEthUsdt {
           indicator_type,
           indicator,
         });
-      } else if (timeTick === 30) {
+      } else if (timeTick === 29) {
         global.io?.sockets.in('indicator_ethusdt').emit(EMITS.INDICATOR_ETHUSDT, {
           oscillatorsBuy: 0,
           oscillatorsNeutral: 0,
@@ -81,6 +81,6 @@ export default class IndicatorEthUsdt {
           indicator: 0,
         });
       }
-    }, 3000);
+    }, 4000);
   }
 }

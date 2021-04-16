@@ -1,7 +1,7 @@
 import express from 'express';
+import HeartBeat from './candlestickStreams/HeartBeat';
+import Indicator from './indicator';
 import Scheduler from './schedulers';
-import HeartBeat from './socketHandlers/candlestickStreams/HeartBeat';
-import Indicator from './socketHandlers/indicator';
 
 class App {
   public app: express.Application;
