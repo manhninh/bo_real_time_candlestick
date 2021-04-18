@@ -1,9 +1,9 @@
-import { PROTECT_STATUS } from '@src/contants/system';
+import {PROTECT_STATUS} from '@src/contants/system';
 import BlockRepository from '@src/repository/blockRepository';
-import { formatter2 } from '@src/utils/utilities';
-import { IBlockModel } from 'bo-trading-common/lib/models/blocks';
+import {formatter2} from '@src/utils/utilities';
+import {IBlockModel} from 'bo-trading-common/lib/models/blocks';
 import moment from 'moment';
-import { EMITS } from '../socketHandlers/emitType';
+import {EMITS} from '../socketHandlers/emitType';
 
 export default class HeartBeat {
   private _blockRes: BlockRepository;
@@ -74,12 +74,7 @@ export default class HeartBeat {
 
       /** cách 30s lưu giá trị vào bảng block 1 lần */
       if (timeTick === 0 || timeTick === 30) {
-        if (timeTick === 0) {
-          const buySell = this._candlestick.o > this._candlestick.c ? 0 : 1;
-          global.io.sockets.in('ethusdt').emit(EMITS.RESULT_BUY_SELL, buySell);
-          global.protectBO = PROTECT_STATUS.NORMAL;
-        }
-        const _blockModel = <IBlockModel>{
+        const blockModel = <IBlockModel>{
           symbol: 'ethusdt',
           event_time: new Date(moment(eventTime).subtract(30, 'seconds').toString()).getTime().toString(),
           open: this._candlestick.o,
@@ -89,7 +84,22 @@ export default class HeartBeat {
           volume: Number(formatter2.format(this._candlestick.v)),
           is_open: timeTick < 30 ? true : false,
         };
-        this._blockRes.create(_blockModel);
+        if (timeTick >= 30) global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, false);
+        else {
+          // trạng thái bvs về bình thường
+          global.protectBO = PROTECT_STATUS.NORMAL;
+          // emit đóng/mở trade
+          global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, true);
+          // emit trả kết quả
+          // const buySell =
+          //   this._candlestick.o === this._candlestick.c
+          //     ? TYPE_WIN.NEUTRAL
+          //     : this._candlestick.o > this._candlestick.c
+          //     ? TYPE_WIN.SELL
+          //     : TYPE_WIN.BUY;
+          global.io.sockets.in('ethusdt').emit(EMITS.RESULT_BUY_SELL, blockModel);
+        }
+        this._blockRes.create(blockModel);
       }
     }, 1000);
   }
