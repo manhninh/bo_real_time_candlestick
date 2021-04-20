@@ -91,12 +91,6 @@ export default class HeartBeat {
           // emit đóng/mở trade
           global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, true);
           // emit trả kết quả
-          // const buySell =
-          //   this._candlestick.o === this._candlestick.c
-          //     ? TYPE_WIN.NEUTRAL
-          //     : this._candlestick.o > this._candlestick.c
-          //     ? TYPE_WIN.SELL
-          //     : TYPE_WIN.BUY;
           global.io.sockets.in('ethusdt').emit(EMITS.RESULT_BUY_SELL, blockModel);
         }
         this._blockRes.create(blockModel);
