@@ -25,8 +25,7 @@ export default class IndicatorEthUsdt {
 
     setInterval(() => {
       const timeTick = moment(new Date()).unix() % 60;
-      if (timeTick > 29) return;
-      if (timeTick < 29) {
+      if (timeTick % 4 == 0 && timeTick <= 28) {
         oscillatorsBuy += random(5, 10);
         oscillatorsNeutral += random(5, 10);
         oscillatorsSell += random(5, 10);
@@ -47,7 +46,24 @@ export default class IndicatorEthUsdt {
           indicator_type = random(700, 900);
         }
         indicator = random(50, 70);
-      } else {
+        /** emit to room indicator_ethusdt */
+        global.io?.sockets.in('indicator_ethusdt').emit(EMITS.INDICATOR_ETHUSDT, {
+          oscillatorsBuy,
+          oscillatorsNeutral,
+          oscillatorsSell,
+          maBuy,
+          maNeutral,
+          maSell,
+          macdBuy,
+          macdNeutral,
+          macdSell,
+          totalBuy,
+          totalNeutral,
+          totalSell,
+          indicator_type,
+          indicator,
+        });
+      } else if (timeTick == 29) {
         oscillatorsBuy = 0;
         oscillatorsNeutral = 0;
         oscillatorsSell = 0;
@@ -62,24 +78,24 @@ export default class IndicatorEthUsdt {
         totalSell = 0;
         indicator_type = 0;
         indicator = 0;
+        /** emit to room indicator_ethusdt */
+        global.io?.sockets.in('indicator_ethusdt').emit(EMITS.INDICATOR_ETHUSDT, {
+          oscillatorsBuy,
+          oscillatorsNeutral,
+          oscillatorsSell,
+          maBuy,
+          maNeutral,
+          maSell,
+          macdBuy,
+          macdNeutral,
+          macdSell,
+          totalBuy,
+          totalNeutral,
+          totalSell,
+          indicator_type,
+          indicator,
+        });
       }
-      /** emit to room indicator_ethusdt */
-      global.io?.sockets.in('indicator_ethusdt').emit(EMITS.INDICATOR_ETHUSDT, {
-        oscillatorsBuy,
-        oscillatorsNeutral,
-        oscillatorsSell,
-        maBuy,
-        maNeutral,
-        maSell,
-        macdBuy,
-        macdNeutral,
-        macdSell,
-        totalBuy,
-        totalNeutral,
-        totalSell,
-        indicator_type,
-        indicator,
-      });
-    }, 4000);
+    }, 1000);
   }
 }
