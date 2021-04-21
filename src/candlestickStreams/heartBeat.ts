@@ -81,7 +81,7 @@ export default class HeartBeat {
           close: this._candlestick.c,
           high: this._candlestick.h,
           low: this._candlestick.l,
-          volume: Number(formatter2.format(this._candlestick.v)),
+          volume: Math.round(this._candlestick.v * 100) / 100,
           is_open: timeTick < 30 ? true : false,
         };
         if (timeTick >= 30) global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, false);

@@ -1,5 +1,5 @@
 import config from '@src/config';
-import { logger } from 'bo-trading-common/lib/utils';
+import {logger} from 'bo-trading-common/lib/utils';
 import WebSocket from 'ws';
 
 export default class CandlestickStreams {
@@ -38,13 +38,13 @@ export default class CandlestickStreams {
       try {
         const data = JSON.parse(msg.data.toString());
         if (data) {
-          if (data.type == "hearbeat") return;
+          if (data.type == 'hearbeat') return;
           global.candlestick = {
             o: Number(data.price_open),
             c: Number(data.price_close),
             h: Number(data.price_high),
             l: Number(data.price_low),
-            v: Number(data.volume_traded) + Number(data.trades_count),
+            v: Number(data.volume_traded) + 5,
           };
         } else {
           logger.warn(`WebSocket to ${this._baseEndpoint} not data: ${msg.data.toString()}\n`);
