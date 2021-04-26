@@ -39,7 +39,6 @@ export default class CandlestickStreams {
         const data = JSON.parse(msg.data.toString());
         if (data) {
           if (data.type == 'hearbeat') return;
-          console.log(data)
           global.candlestick = {
             o: Number(data.price_open),
             c: Number(data.price_close),
