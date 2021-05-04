@@ -17,4 +17,8 @@ export default {
   WS_COIN_API_ENDPOINT: process.env.WS_COIN_API_ENDPOINT,
 
   WS_COIN_API_KEY: process.env.WS_COIN_API_KEY,
+
+  WS_TOKEN_CALCULATOR: process.env.WS_TOKEN_CALCULATOR,
+
+  WS_TOKEN_API: process.env.WS_TOKEN_API,
 };

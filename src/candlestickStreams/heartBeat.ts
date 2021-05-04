@@ -36,7 +36,8 @@ export default class HeartBeat {
       else lPrice = closeToOpen || global.candlestick.o;
       this._candlestick.l = lPrice;
 
-      // TODO: tính năng bảo vệ sàn
+      console.log(global.protectBO, 'global.protectBO');
+      // tính năng bảo vệ sàn
       if (global.protectBO === PROTECT_STATUS.BUY_WIN) {
         if (this._candlestick.o > global.candlestick.c) {
           const rangeData = this._candlestick.o - global.candlestick.c;
@@ -44,6 +45,11 @@ export default class HeartBeat {
           this._candlestick.c += rangeData + fake;
         }
       } else if (global.protectBO === PROTECT_STATUS.SELL_WIN) {
+        if (this._candlestick.o < global.candlestick.c) {
+          const rangeData = global.candlestick.c - this._candlestick.o;
+          const fake = this._randomRange(this._candlestick.o, this._candlestick.c);
+          this._candlestick.c -= rangeData + fake;
+        }
       }
 
       const timeTick = moment(new Date()).unix() % 60;

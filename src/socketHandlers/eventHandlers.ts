@@ -1,6 +1,10 @@
-import { logger } from 'bo-trading-common/lib/utils';
-import { Server, Socket } from 'socket.io';
-import { ExtendedError } from 'socket.io/dist/namespace';
+import config from '@src/config';
+import AccessTokenRepository from '@src/repository/AccessTokenRepository';
+import UserRepository from '@src/repository/UserRepository';
+import {logger} from 'bo-trading-common/lib/utils';
+import {Server, Socket} from 'socket.io';
+import {ExtendedError} from 'socket.io/dist/namespace';
+import ApiCalculatorEvents from './events/apiCalculator';
 import TradingWebEvents from './events/tradingWeb';
 import TradingWebRooms from './rooms/tradingWeb';
 
@@ -9,25 +13,21 @@ export default (io: Server) => {
     global.io = io;
     io.use(async (socket: Socket, next: (err?: ExtendedError) => void) => {
       try {
-        // logger.info('Socket connect token');
-        // const token = socket.handshake.query['token'];
-        // if (token) {
-        //   const accessTokenRes = new AccessTokenRepository();
-        //   const accessToken = await accessTokenRes.findOne({token});
-        //   const userRepository = new UserRepository();
-        //   const realUserRepository = new RealUserRepository();
-        //   const expertRepository = new ExpertRepository();
-        //   const expert = await expertRepository.findById(accessToken.id_client);
-        //   if (!expert) {
-        //     const realUser = await realUserRepository.findById(accessToken.id_client);
-        //     if (realUser) socket['userId'] = realUser.id;
-        //     else {
-        //       const user = await userRepository.findById(accessToken.id_client);
-        //       if (user) socket['userId'] = user.id_user_trading;
-        //     }
-        //   } else socket['userId'] = expert.id;
-        // }
-        next();
+        logger.info('Socket connect token');
+        const token = socket.handshake.query['token'].toString();
+        if (token) {
+          if (token === config.WS_TOKEN_CALCULATOR || token === config.WS_TOKEN_API) next();
+          else {
+            const accessTokenRes = new AccessTokenRepository();
+            const accessToken = await accessTokenRes.findByToken(token);
+            const userRepository = new UserRepository();
+            const user = await userRepository.findById(accessToken.user_id);
+            if (user) {
+              socket['user_id'] = user.id;
+              next();
+            } else next(new Error('Socket not authorized'));
+          }
+        } else next(new Error('Socket not authorized'));
       } catch (error) {
         logger.error(`SOCKET AUTHORIZE ERROR: ${error.message}`);
       }
@@ -41,7 +41,7 @@ export default (io: Server) => {
           socket.on(roomName, handler[roomName]);
         }
       });
-      const eventHandlers = [TradingWebEvents(socket)];
+      const eventHandlers = [TradingWebEvents(socket), ApiCalculatorEvents(socket)];
       eventHandlers.forEach((handler) => {
         for (const eventName in handler) {
           socket.on(eventName, handler[eventName]);
