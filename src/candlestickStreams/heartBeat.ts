@@ -36,7 +36,6 @@ export default class HeartBeat {
       else lPrice = closeToOpen || global.candlestick.o;
       this._candlestick.l = lPrice;
 
-      console.log(global.protectBO, 'global.protectBO');
       // tính năng bảo vệ sàn
       if (global.protectBO === PROTECT_STATUS.BUY_WIN) {
         if (this._candlestick.o > global.candlestick.c) {

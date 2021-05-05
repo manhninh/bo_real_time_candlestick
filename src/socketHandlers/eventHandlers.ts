@@ -1,5 +1,6 @@
 import config from '@src/config';
 import AccessTokenRepository from '@src/repository/AccessTokenRepository';
+import AdminRepository from '@src/repository/AdminRepository';
 import UserRepository from '@src/repository/UserRepository';
 import {logger} from 'bo-trading-common/lib/utils';
 import {Server, Socket} from 'socket.io';
@@ -25,7 +26,14 @@ export default (io: Server) => {
             if (user) {
               socket['user_id'] = user.id;
               next();
-            } else next(new Error('Socket not authorized'));
+            } else {
+              const adminRepository = new AdminRepository();
+              const admin = await adminRepository.findById(accessToken.user_id);
+              if (admin) {
+                socket['user_id'] = 'administrator';
+                next();
+              } else next(new Error('Socket not authorized'));
+            }
           }
         } else next(new Error('Socket not authorized'));
       } catch (error) {
