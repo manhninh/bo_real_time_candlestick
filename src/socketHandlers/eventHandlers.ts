@@ -1,7 +1,7 @@
 import config from '@src/config';
-import AccessTokenRepository from '@src/repository/AccessTokenRepository';
-import AdminRepository from '@src/repository/AdminRepository';
-import UserRepository from '@src/repository/UserRepository';
+import AccessTokenRepository from '@src/repository/accessTokenRepository';
+import AdminRepository from '@src/repository/adminRepository';
+import UserRepository from '@src/repository/userRepository';
 import {logger} from 'bo-trading-common/lib/utils';
 import {Server, Socket} from 'socket.io';
 import {ExtendedError} from 'socket.io/dist/namespace';
