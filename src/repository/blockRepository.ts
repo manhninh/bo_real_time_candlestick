@@ -9,7 +9,7 @@ export default class BlockRepository extends RepositoryBase<IBlockModel> {
 
   public async blockEthShowChart(): Promise<IBlockModel[]> {
     try {
-      const result = await BlockSchema.find({symbol: 'ethusdt'}).sort({event_time: -1}).limit(110);
+      const result = await BlockSchema.find({symbol: 'ethusdt'}).sort({event_time: -1}).limit(100);
       return result.reverse();
     } catch (err) {
       throw err;
