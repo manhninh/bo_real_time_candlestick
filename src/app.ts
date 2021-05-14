@@ -1,11 +1,9 @@
 import express from 'express';
 import HeartBeat from './candlestickStreams/heartBeat';
 import Indicator from './indicator';
-import Scheduler from './schedulers';
 
 class App {
   public app: express.Application;
-  public scheduler: Scheduler;
 
   constructor() {
     this.app = express();
@@ -13,7 +11,6 @@ class App {
     new HeartBeat();
     new Indicator();
     /** cronjob */
-    new Scheduler().config();
   }
 }
 

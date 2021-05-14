@@ -1,6 +1,5 @@
 import {PROTECT_STATUS} from '@src/contants/system';
 import BlockRepository from '@src/repository/blockRepository';
-import {formatter2} from '@src/utils/utilities';
 import {IBlockModel} from 'bo-trading-common/lib/models/blocks';
 import moment from 'moment';
 import {EMITS} from '../socketHandlers/emitType';
@@ -18,10 +17,15 @@ export default class HeartBeat {
     let closeToOpen = null;
     let hPrice = null;
     let lPrice = null;
+    let totalVolume = null;
     setInterval(() => {
       if (!global.candlestick) return;
       /** nếu hiện tại chưa có thông tin nến thì lấy từ biến global ra */
       this._candlestick = global.candlestick;
+
+      /** cộng dồn volume */
+      if (!totalVolume) totalVolume = global.candlestick.v;
+      totalVolume += global.candlestick.v;
 
       /** gán lại giá trị close của nến trước cho giá trị open của nến hiện tại */
       this._candlestick.o = closeToOpen || global.candlestick.o;
@@ -69,11 +73,12 @@ export default class HeartBeat {
           close: this._candlestick.c,
           high: this._candlestick.h,
           low: this._candlestick.l,
-          volume: formatter2.format(this._candlestick.v),
+          volume: totalVolume,
           is_open: timeTick < 30 ? true : false,
         },
         timeTick,
       };
+
       /** emit to room ethusdt */
       global.io.sockets.in('ethusdt').emit(EMITS.ETHUSDT_REALTIME, data);
 
@@ -86,7 +91,7 @@ export default class HeartBeat {
           close: this._candlestick.c,
           high: this._candlestick.h,
           low: this._candlestick.l,
-          volume: Math.round(this._candlestick.v * 100) / 100,
+          volume: totalVolume,
           is_open: timeTick < 30 ? true : false,
         };
         if (timeTick >= 30) global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, false);
@@ -99,15 +104,14 @@ export default class HeartBeat {
           global.io.sockets.in('ethusdt').emit(EMITS.RESULT_BUY_SELL, blockModel);
         }
         this._blockRes.create(blockModel);
+        totalVolume = 0;
       }
     }, 1000);
   }
 
   private _randomRange = (valueOne: number, valueTwo: number) => {
     const average = (valueOne + valueTwo) / 2;
-    const round = Math.round(average * 100) / 100;
-    const newClose = Math.abs(round - valueTwo);
-    const range = Math.round(newClose * 100) / 100;
+    const range = Math.abs(average - valueTwo);
     return range;
   };
 

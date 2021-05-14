@@ -15,7 +15,6 @@ export default class CandlestickStreams {
     this._ws = new WebSocket(this._baseEndpoint);
 
     this._ws.onopen = () => {
-      logger.info(`WebSocket connected to ${this._baseEndpoint}\n`);
       var hello = {
         type: 'hello',
         heartbeat: true,
@@ -23,10 +22,13 @@ export default class CandlestickStreams {
         subscribe_data_type: ['ohlcv'],
         subscribe_filter_symbol_id: [
           // 'BINANCE_SPOT_ETH_USDT',
-          'COINBASE_SPOT_ETH_USDC',
-          // 'KRAKEN_SPOT_ETH_USDT',
           'HUOBI_SPOT_ETH_USDT',
-          // 'BITFINEX_SPOT_ETH_USDT',
+          'KCS_SPOT_ETH_USDT',
+          'COINBASE_SPOT_ETH_USD',
+          'FTX_SPOT_ETH_USD',
+          'BITFINEX_SPOT_ETH_USDT',
+          'KRAKEN_SPOT_ETH_USDT',
+          'BITTREX_SPOT_ETH_USDT',
         ],
         subscribe_filter_asset_id: ['ETH'],
         subscribe_filter_period_id: ['1SEC'],
@@ -40,11 +42,11 @@ export default class CandlestickStreams {
         if (data) {
           if (data.type == 'hearbeat') return;
           global.candlestick = {
-            o: Number(data.price_open),
-            c: Number(data.price_close),
-            h: Number(data.price_high),
-            l: Number(data.price_low),
-            v: Number(data.trades_count),
+            o: Math.round(Number(data.price_open) * 100) / 100,
+            c: Math.round(Number(data.price_close) * 100) / 100,
+            h: Math.round(Number(data.price_high) * 100) / 100,
+            l: Math.round(Number(data.price_low) * 100) / 100,
+            v: Math.round(Number(data.trades_count) * 100) / 100,
           };
         } else {
           logger.warn(`WebSocket to ${this._baseEndpoint} not data: ${msg.data.toString()}\n`);
