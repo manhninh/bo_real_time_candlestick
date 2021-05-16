@@ -1,14 +1,19 @@
 import {PROTECT_STATUS} from '@src/contants/system';
 import BlockRepository from '@src/repository/blockRepository';
+import LastResultRepository from '@src/repository/lastResultRepository';
 import {IBlockModel} from 'bo-trading-common/lib/models/blocks';
+import {ILastResultModel} from 'bo-trading-common/lib/models/lastResults';
+import {logger} from 'bo-trading-common/lib/utils';
 import moment from 'moment';
 import {EMITS} from '../socketHandlers/emitType';
 
 export default class HeartBeat {
   private _blockRes: BlockRepository;
+  private _lastResutlRes: LastResultRepository;
 
   constructor() {
     this._blockRes = new BlockRepository();
+    this._lastResutlRes = new LastResultRepository();
     this._init();
   }
 
@@ -102,6 +107,23 @@ export default class HeartBeat {
           global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, true);
           // emit trả kết quả
           global.io.sockets.in('ethusdt').emit(EMITS.RESULT_BUY_SELL, blockModel);
+          // lưu kết quả cuối cùng
+          this._lastResutlRes
+            .create(<ILastResultModel>{
+              group: global.lastGroup,
+              el_number: global.lastNumber,
+              result: blockModel.open <= blockModel.close ? false : true,
+            })
+            .then((result: ILastResultModel) => {
+              // emit đến client
+              global.io.sockets.in('ethusdt').emit(EMITS.LAST_RESULT, result);
+              // thay đổi biến global
+              global.lastGroup = result.el_number == 16 ? result.group + 1 : result.group;
+              global.lastNumber = result.el_number == 16 ? 1 : result.el_number + 1;
+            })
+            .catch((error) => {
+              logger.error('Save last result error: ', error);
+            });
         }
         this._blockRes.create(blockModel);
         totalVolume = 0;

@@ -29,7 +29,7 @@ export default class BlockRepository extends RepositoryBase<IBlockModel> {
           $sort: {event_time: -1},
         },
         {
-          $limit: 100,
+          $limit: 80,
         },
         {
           $project: {

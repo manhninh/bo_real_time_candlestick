@@ -989,10 +989,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/node@*", "@types/node@>=10.0.0", "@types/node@^15.0.3":
-  version "15.0.3"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.0.3.tgz#ee09fcaac513576474c327da5818d421b98db88a"
-  integrity sha512-/WbxFeBU+0F79z9RdEOXH4CsDga+ibi5M8uEYr91u3CkT/pdWcV8MCook+4wDPnZBexRdwWS+PiVZ2xJviAzcQ==
+"@types/node@*", "@types/node@>=10.0.0", "@types/node@^15.3.0":
+  version "15.3.0"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-15.3.0.tgz#d6fed7d6bc6854306da3dea1af9f874b00783e26"
+  integrity sha512-8/bnjSZD86ZfpBsDlCIkNXIvm+h6wi9g7IqL+kmFkQ+Wvu3JrasgLElfiPgoo8V8vVfnEi0QVS12gbl94h9YsQ==
 
 "@types/oauth2orize@^1.8.3":
   version "1.8.8"
@@ -1253,10 +1253,10 @@ bluebird@3.5.1:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
   integrity sha512-MKiLiV+I1AA596t9w1sQJ8jkiSr5+ZKi0WKrYGUn6d1Fx+Ij4tIj+m2WMQSGczs5jZVxV339chE8iwk6F64wjA==
 
-bo-trading-common@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/bo-trading-common/-/bo-trading-common-1.6.2.tgz#bbdb291927030818ed8663187a331024253f159d"
-  integrity sha512-h5LeU1LlX8aGXHs2TNNm137OofA6g+xkbwkpRZNqGL22V9sX/fEqvv4IPG4VdMCTfdlBFnmePmqOIa7TC/XKAg==
+bo-trading-common@^1.6.3:
+  version "1.6.3"
+  resolved "https://registry.yarnpkg.com/bo-trading-common/-/bo-trading-common-1.6.3.tgz#260afb101ec6fc37030a89d77ce8c65985cc91ac"
+  integrity sha512-LtJGuG9rsSufGc2KYf4V3nCh6m3gCEzoa4n4gHrtsGt9jZslyo7toLP34Xdy6HuTLZkUzQUhVOBlK9ITU3q0JQ==
   dependencies:
     express "^4.16.3"
     moment "^2.22.2"
@@ -1788,9 +1788,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.723:
-  version "1.3.727"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.727.tgz#857e310ca00f0b75da4e1db6ff0e073cc4a91ddf"
-  integrity sha512-Mfz4FIB4FSvEwBpDfdipRIrwd6uo8gUDoRDF4QEYb4h4tSuI3ov594OrjU6on042UlFHouIJpClDODGkPcBSbg==
+  version "1.3.728"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.728.tgz#dbedd6373f595ae10a13d146b66bece4c1afa5bd"
+  integrity sha512-SHv4ziXruBpb1Nz4aTuqEHBYi/9GNCJMYIJgDEXrp/2V01nFXMNFUTli5Z85f5ivSkioLilQatqBYFB44wNJrA==
 
 emoji-regex@^7.0.1:
   version "7.0.3"

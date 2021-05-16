@@ -14,5 +14,9 @@ declare module NodeJS {
     io: any;
     /** bảo vệ sàn */
     protectBO: number;
+    /** last group */
+    lastGroup: number;
+    /** last number */
+    lastNumber: number;
   }
 }

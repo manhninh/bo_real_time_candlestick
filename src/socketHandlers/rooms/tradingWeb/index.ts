@@ -1,4 +1,5 @@
 import BlockRepository from '@src/repository/blockRepository';
+import LastResultRepository from '@src/repository/lastResultRepository';
 import {EMITS} from '@src/socketHandlers/emitType';
 import {logger} from 'bo-trading-common/lib/utils';
 import {Socket} from 'socket.io';
@@ -19,8 +20,9 @@ const ethusdt: TradingCandles = (socket) => (data) => {
     });
 
   // show result
-  blockRes
-    .blockEthResult()
+  const lastResultRes = new LastResultRepository();
+  lastResultRes
+    .totalLastResults()
     .then((ethResult) => {
       socket.emit(EMITS.RESULT_ETHUSDT, ethResult);
     })
