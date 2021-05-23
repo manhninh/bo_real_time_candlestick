@@ -36,7 +36,7 @@ export default (io: Server) => {
           }
         } else next(new Error('Socket not authorized'));
       } catch (error) {
-        logger.error(`SOCKET AUTHORIZE ERROR: ${error.message}`);
+        // logger.error(`SOCKET AUTHORIZE ERROR: ${error.message}`);
         next(new Error('Socket not authorized'));
       }
     });
