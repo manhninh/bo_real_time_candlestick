@@ -23,7 +23,7 @@ export default (io: Server) => {
             const userRepository = new UserRepository();
             const user = await userRepository.findById(accessToken.user_id);
             if (user) {
-              socket['user_id'] = user.id;
+              socket['user_id'] = user.id.toString();
               next();
             } else {
               const adminRepository = new AdminRepository();
