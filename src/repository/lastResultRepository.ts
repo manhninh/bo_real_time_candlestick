@@ -31,7 +31,7 @@ export default class LastResultRepository extends RepositoryBase<ILastResultMode
           },
         },
         {$sort: {_id: -1}},
-        {$limit: 6},
+        {$limit: 5},
         {$unwind: '$el_number'},
         {
           $group: {
