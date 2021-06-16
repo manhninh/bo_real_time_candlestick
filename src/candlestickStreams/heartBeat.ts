@@ -91,25 +91,19 @@ export default class HeartBeat {
 
       /** cách 30s lưu giá trị vào bảng block 1 lần */
       if (timeTick === 0 || timeTick === 30) {
-        closeToOpen = this._candlestick.c;
+        closeToOpen = data.candlestick.close;
         hPrice = null;
         lPrice = null;
-        console.log('data', timeTick, {
-          open: this._candlestick.o,
-          close: this._candlestick.c,
-          high: this._candlestick.h,
-          low: this._candlestick.l,
-        });
 
         const blockModel = <IBlockModel>{
           symbol: 'ethusdt',
-          event_time: new Date(moment(eventTime).subtract(30, 'seconds').toString()).getTime().toString(),
-          open: this._candlestick.o,
-          close: this._candlestick.c,
-          high: this._candlestick.h,
-          low: this._candlestick.l,
+          event_time: new Date(moment(data.candlestick.event_time).subtract(30, 'seconds').toString()).getTime().toString(),
+          open: data.candlestick.open,
+          close: data.candlestick.close,
+          high: data.candlestick.high,
+          low: data.candlestick.low,
           volume: totalVolume,
-          is_open: timeTick < 30 ? true : false,
+          is_open: timeTick < 30 ? true : false, 
         };
         if (timeTick >= 30) global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, false);
         else {
