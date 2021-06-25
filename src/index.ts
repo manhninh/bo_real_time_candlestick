@@ -24,7 +24,11 @@ server.on('listening', () => {
     );
 
     /** kết nối với websocket của COINAPI để lấy thông tin nến */
-    new CandlestickStreams(config.WS_COIN_API_ENDPOINT);
+    const ws = new CandlestickStreams(config.WS_COIN_API_ENDPOINT);
+
+    setTimeout(function () {
+      ws._ws.close();
+    }, 15000);
 
     /** tạo socket server của hệ thống */
     const io: Server = new Server(server, { cors: { origin: '*' } });

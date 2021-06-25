@@ -1,5 +1,5 @@
 import config from '@src/config';
-import {logger} from 'bo-trading-common/lib/utils';
+import { logger } from 'bo-trading-common/lib/utils';
 import WebSocket from 'ws';
 
 export default class CandlestickStreams {
@@ -15,6 +15,7 @@ export default class CandlestickStreams {
     this._ws = new WebSocket(this._baseEndpoint);
 
     this._ws.onopen = () => {
+      logger.info("websocket open");
       var hello = {
         type: 'hello',
         heartbeat: true,
@@ -58,9 +59,8 @@ export default class CandlestickStreams {
 
     this._ws.onclose = () => {
       logger.warn(`WebSocket to ${this._baseEndpoint} closed. Reconnect will be attempted in 1 second\n`);
-      setTimeout(function () {
-        new CandlestickStreams(config.WS_COIN_API_ENDPOINT);
-      }, 1000);
+      logger.info("websocket restart");
+      new CandlestickStreams(config.WS_COIN_API_ENDPOINT);
     };
 
     this._ws.onerror = (err: WebSocket.ErrorEvent) =>
