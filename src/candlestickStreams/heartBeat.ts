@@ -30,10 +30,10 @@ export default class HeartBeat {
 
       // cộng dồn volume
       if (!totalVolume) totalVolume = global.candlestick.v;
-      totalVolume += global.candlestick.v;
+      // nếu volume tổng nhỏ hơn 1500 thì cộng dồn không thì thôi
+      if (totalVolume <= 1500) totalVolume += global.candlestick.v;
 
       // gán lại giá trị close của nến trước cho giá trị open của nến hiện tại
-      // console.log(closeToOpen, 'closeToOpen');
       this._candlestick.o = closeToOpen || global.candlestick.o;
 
       // gán giá trị close hiện tại vào biến để so sánh
@@ -97,13 +97,15 @@ export default class HeartBeat {
 
         const blockModel = <IBlockModel>{
           symbol: 'ethusdt',
-          event_time: new Date(moment(data.candlestick.event_time).subtract(30, 'seconds').toString()).getTime().toString(),
+          event_time: new Date(moment(data.candlestick.event_time).subtract(30, 'seconds').toString())
+            .getTime()
+            .toString(),
           open: data.candlestick.open,
           close: data.candlestick.close,
           high: data.candlestick.high,
           low: data.candlestick.low,
           volume: totalVolume,
-          is_open: timeTick < 30 ? true : false, 
+          is_open: timeTick < 30 ? true : false,
         };
         if (timeTick >= 30) global.io.sockets.in('ethusdt').emit(EMITS.OPEN_TRADE, false);
         else {
