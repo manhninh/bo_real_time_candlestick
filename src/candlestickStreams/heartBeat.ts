@@ -31,7 +31,7 @@ export default class HeartBeat {
       // cộng dồn volume
       if (!totalVolume) totalVolume = global.candlestick.v;
       // nếu volume tổng nhỏ hơn 1500 thì cộng dồn không thì thôi
-      if (totalVolume <= 1500) totalVolume += global.candlestick.v;
+      if (totalVolume <= 1000) totalVolume += global.candlestick.v;
 
       // gán lại giá trị close của nến trước cho giá trị open của nến hiện tại
       this._candlestick.o = closeToOpen || global.candlestick.o;
